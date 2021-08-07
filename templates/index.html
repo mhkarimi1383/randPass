@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; UTF-8" charset="utf-8" />
+    <title>Random Password Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+  <body style="text-align: center;" class="text-light bg-dark">
+    <div class="p-3">
+{{if .Success}}
+    <h3>Below is your password</h3>
+    <div class="card">
+  <div class="card-body">
+    <code id="password" class="monospace">{{ .Password }}</code> <br />
+  </div>
+</div>
+<br />
+<button type="button" class="btn btn-primary copy" data-bs-toggle="popover" title="Done" data-bs-content="Data copied to Clipboard">Copy To Clipboard</button>
+
+{{else}}
+    <h1>Get a New password</h1>
+    <form class="p-3" method="POST">
+        <div class="form-group">
+        <label>Password Length:</label><br />
+        <input type="range" value="5" min="1" max="2000" oninput="num.value = this.value" name="length"><br />
+        <output id="num">5</output><br />
+        <label>Use Upper Case:</label><br />
+        <input type="checkbox" name="upper"><br />
+        <label>Use Special Characters:</label><br />
+        <input type="checkbox" name="special"><br />
+        <label>Use Numbers:</label><br />
+        <input type="checkbox" name="number"><br /><br />
+        <input class="btn btn-primary" type="submit">
+      </div>
+    </form>
+{{end}}
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script>
+$(document).on("click", ".copy", function() {
+  const code = document.getElementById('password');
+  navigator.clipboard.writeText(code.innerHTML);
+  alert('Copied To Clipboard!');
+
+});
+</script>
+<style>
+@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@5.2/distr/fira_code.css);
+
+.monospace {
+    font-family: 'Fira Code medium', monospace;
+    font-size: 100%;
+    text-align: center;
+    margin: 0;
+}
+
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl)
+})
+</style>
+  </body>
+</html>
